@@ -250,8 +250,8 @@
 
         .gallery-scroll img {
             flex: 0 0 auto; /* Zabrání tomu, aby se fotky zdeformovaly a smrskly */
-            width: auto;   /* Pevná šířka jedné fotky (můžete upravit) */
-            height: 500px;
+            width: 350px;   /* Pevná šířka jedné fotky (můžete upravit) */
+            height: 350px;
             object-fit: cover;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -262,6 +262,51 @@
         /* Místo zvětšování se fotka při najetí myší mírně nadzvedne */
         .gallery-scroll img:hover {
             transform: translateY(-5px);
+        }
+
+        /* MODAL (Zvětšení fotky) */
+        .gallery-modal {
+            display: none; /* By default, it is hidden */
+            position: fixed;
+            z-index: 2000; /* Must be higher than your header (which is 1000) */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); /* Dark semi-transparent background */
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            cursor: zoom-out; /* Changes mouse cursor to a minus magnifying glass */
+        }
+
+        /* JavaScript will add this class to show it */
+        .gallery-modal.active {
+            display: flex; 
+        }
+
+        .gallery-modal img {
+            max-width: 90%;
+            max-height: 85vh; /* 85% of the screen height so it never gets cut off */
+            object-fit: contain; /* Shows the whole image without cropping */
+            border-radius: 5px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+            cursor: default;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--primary-blue);
         }
 
         /* Hezčí vzhled posuvníku na počítači */
@@ -422,6 +467,11 @@
             
         </div>
 
+        <div id="image-modal" class="gallery-modal">
+            <span class="close-modal">&times;</span>
+            <img id="modal-image" src="" alt="Zvětšená fotka">
+        </div>
+
         <div class="wave-bottom">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
                 <path fill="#ffffff" fill-opacity="1" d="M0,96L60,112C120,128,240,160,360,160C480,160,600,128,720,112C840,96,960,96,1080,112C1200,128,1320,160,1380,176L1440,192L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
@@ -524,15 +574,36 @@
         ];
 
         const galleryContainer = document.getElementById('gallery-container');
+        
+        // Modal elements
+        const imageModal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
 
-        // Kód, který projde seznam výše a poskládá obrázky na stránku
         if (galleryContainer) {
             naseFotky.forEach(nazevSouboru => {
                 const obrazek = document.createElement('img');
                 obrazek.src = `galerie/${nazevSouboru}`;
                 obrazek.alt = "Fotografie z akce Autis.My.Ty";
-                obrazek.loading = "lazy"; // Chytré načítání: fotka se stáhne až když k ní uživatel doscrolluje (šetří data)
+                obrazek.loading = "lazy";
+                obrazek.style.cursor = "zoom-in"; // Changes mouse to a plus magnifying glass
+                
+                // ADDED: Click event to open the full picture
+                obrazek.addEventListener('click', () => {
+                    modalImage.src = obrazek.src; // Copies the image source
+                    imageModal.classList.add('active'); // Shows the dark background
+                });
+
                 galleryContainer.appendChild(obrazek);
+            });
+        }
+
+        // ADDED: Close the modal when clicking the "X" or the dark background
+        if (imageModal) {
+            imageModal.addEventListener('click', (e) => {
+                // Only close if they click outside the actual image
+                if (e.target !== modalImage) {
+                    imageModal.classList.remove('active');
+                }
             });
         }
 
