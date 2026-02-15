@@ -45,7 +45,7 @@
             left: 0;
             box-sizing: border-box;
             z-index: 1000;
-            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
         }
 
 
@@ -78,7 +78,19 @@
             height: 3px;
             background-color: var(--white);
             border-radius: 3px;
-            transition: 0.3s;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
         }
 
         .logo { 
@@ -242,20 +254,27 @@
             
             /* Skryje a přeformátuje menu do roletky */
             nav ul {
-                display: none;
+                display: flex;
                 flex-direction: column;
                 position: absolute;
-                top: 60px; /* Zarovnání pod hlavičku */
-                left: 0;
-                width: 100%;
+                top: 100%; /* Zarovnání pod hlavičku */
+                left: 50%;
+                width: 50%;
                 background-color: var(--primary-blue);
-                padding: 1rem 0;
                 text-align: center;
                 box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
+                max-height: 0;       /* Animace začíná na 0 height */
+                padding: 0;          /* Animace začíná na 0 padding */
+                overflow: hidden;    /* Schhová text když není visible */
+                transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
             }
             
             /* Třída, kterou přidává JavaScript pro zobrazení menu */
-            nav ul.active { display: flex; }
+            nav ul.active { 
+                max-height: 400px;
+                padding: 1rem 0; 
+            }
             
             nav ul li { margin: 15px 0; }
             
@@ -405,12 +424,14 @@
         // Otevření/zavření menu po kliknutí na hamburger
         hamburger.addEventListener('click', () => {
             navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
         });
 
         // Automatické zavření menu po kliknutí na jakýkoliv odkaz (aby nezavazelo)
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
                 navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
             });
         });
     </script>
