@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutisMyTy z.s.</title>
+    <link rel="icon" type="image/svg+xml" href="AutisMyTy.svg">
+    <style>
+        /* Základní barvy a písmo */
+        :root {
+            --primary-blue: #0056b3;
+            --light-blue: #f0f8ff;
+            --text-dark: #333333;
+            --white: #ffffff;
+        }
+
+        /* Globální nastavení box-sizing pro správné škálování */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Hlavička a navigace */
+        header {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            box-sizing: border-box;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo { font-size: 1.8rem; font-weight: bold; letter-spacing: 1px; }
+
+        /* Nastavení standardního menu (PC) */
+        nav ul { 
+            list-style: none; 
+            display: flex; 
+            margin: 0; 
+            padding: 0; 
+        }
+        nav ul li { margin-left: 25px; }
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: opacity 0.3s;
+        }
+        nav ul li a:hover { opacity: 0.7; }
+
+        /* Hamburger ikona (Skrytá na PC) */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--white);
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+
+        .logo { 
+            font-size: 1.8rem; 
+            font-weight: bold; 
+            letter-spacing: 1px;
+            display: flex;         /* Aligns image and text in a row */
+            align-items: center;   /* Centers them vertically */
+            gap: 12px;             /* Adds a nice gap between the image and text */
+        }
+
+        /* Controls the size of your SVG so it fits the header */
+        .logo-icon {
+            height: 40px; 
+            width: auto;
+            background-color: var(--white); /* This gives it the white box */
+            padding: 5px;                   /* This gives the logo some breathing room inside the box */
+            border-radius: 6px;             /* This softly rounds the corners of the white box */
+        }
+
+        /* Společné nastavení sekcí */
+        section {
+            padding: 7rem 2rem 4rem;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .container { max-width: 1000px; width: 100%; }
+
+        h1 { font-size: 3rem; color: var(--primary-blue); margin-bottom: 0.5rem; }
+        h2 { font-size: 2.2rem; color: var(--primary-blue); margin-bottom: 1.5rem; }
+        h3 { font-size: 1.5rem; color: var(--primary-blue); margin-top: 0; }
+        p { font-size: 1.1rem; margin-bottom: 1.5rem; }
+
+        /* Střídání barev pozadí pro lepší čitelnost */
+        #uvod { background-color: var(--white); }
+        #informace { background-color: var(--light-blue); }
+        #novinky { background-color: var(--white); }
+        #kontakt { background-color: var(--light-blue); }
+
+        /* Tlačítka */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .btn:hover { 
+            background-color: #003d82; 
+            transform: translateY(-2px); /* Moves the button up */
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3); /* Deeper shadow */
+        }
+
+        /* Kontejner pro Facebook */
+        .fb-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        /* KONTAKTNÍ SEKCE - Formulář a Mapa */
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .contact-form, .contact-map {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--white); /* Bílé boxy na modrém pozadí */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .contact-form label { display: block; margin-bottom: 5px; font-weight: 500; }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        .contact-form button {
+            width: 100%;
+            margin-top: 0;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .map-responsive {
+            overflow: hidden;
+            padding-bottom: 60%;
+            position: relative;
+            height: 0;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        .map-responsive iframe {
+            left: 0; top: 0; height: 100%; width: 100%; position: absolute; border: 0;
+        }
+
+        /* Patička */
+        footer {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* =========================================
+           MOBILNÍ VERZE (Když je obrazovka menší než 768px)
+           ========================================= */
+        @media (max-width: 768px) {
+            header { padding: 1rem; }
+            
+            /* Zobrazí hamburger ikonu */
+            .hamburger { display: flex; }
+            
+            /* Skryje a přeformátuje menu do roletky */
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px; /* Zarovnání pod hlavičku */
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-blue);
+                padding: 1rem 0;
+                text-align: center;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+            
+            /* Třída, kterou přidává JavaScript pro zobrazení menu */
+            nav ul.active { display: flex; }
+            
+            nav ul li { margin: 15px 0; }
+            
+            /* Zmenšení paddingů a textů pro menší displeje */
+            section { padding: 6rem 1.5rem 3rem; }
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            
+            /* Formulář a mapa se seřadí pod sebe */
+            .contact-form, .contact-map {
+                width: 100%;
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="AutisMyTy.svg" alt="Logo AutisMyTy" class="logo-icon">
+            AutisMyTy
+        </div>
+
+        <nav>
+            <ul id="nav-menu">
+                <li><a href="#uvod">Úvod</a></li>
+                <li><a href="#informace">Informace</a></li>
+                <li><a href="#novinky">Novinky</a></li>
+                <li><a href="#kontakt">Kontakt</a></li>
+            </ul>
+        </nav>
+
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+    </header>
+
+    <section id="uvod">
+        <div class="container">
+            <br><br>
+            <img src="AutisMyTy.svg" alt="Logo AutisMyTy">
+            <h1>AutisMyTy</h1>
+            <p>Tvoříme prostor, kde se můžeme setkávat, sdílet zkušenosti a navazovat nová přátelství bez předsudků.</p>
+            <a href="#informace" class="btn">Zjistit více o nás</a>
+        </div>
+    </section>
+
+    <section id="informace">
+        <div class="container">
+            <h2>Kdo jsme a co děláme</h2>
+            <p>Jsme nově založená nezisková organizace  <b>AutisMyTy z.s.</b>, která vznikla z iniciativy rodičů dětí s poruchou autistického spektra (PAS). Naším cílem je podpora rodin a dětí s PAS, zejména v oblasti volného času, rozvoje sociálních a komunikačních dovedností a vzájemné rodičovské podpory.</p>
+            <p>Naším posláním je spojovat rodiny a děti v prostředí přijetí, porozumění a lidskosti. Přinášíme příležitosti k rozvoji, radosti, sdílení a respektujícím mezilidským vztahům.</p>
+        </div>
+    </section>
+
+    <section id="novinky">
+        <div class="container">
+            <h2>Co je u nás nového</h2>
+            <p>Sledujte aktuální dění, fotografie a příběhy z naší organizace přímo z našeho Facebooku.</p>
+            
+            <div class="fb-wrapper">
+                <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D61583014940092&tabs=timeline&width=500&height=700&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" width="500" height="700" style="border:none; overflow:hidden; width:100%; max-width:500px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <section id="kontakt">
+        <div class="container">
+            <h2>Spojte se s námi</h2>
+            <p>Potřebujete poradit, chcete se stát dobrovolníkem, nebo máte zájem podpořit naši činnost? Napište nám nebo nás navštivte.</p>
+            
+            <div class="contact-container">
+                
+                <div class="contact-form">
+                    <h3>Napište nám</h3>
+                    <form action="https://formsubmit.co/autismyty@gmail.com" method="POST">
+                        <label for="name">Jméno:</label>
+                        <input type="text" id="name" name="jmeno" required placeholder="Vaše jméno">
+                        
+                        <label for="email">E-mail:</label>
+                        <input type="email" id="email" name="email" required placeholder="vas@email.cz">
+                        
+                        <label for="message">Zpráva:</label>
+                        <textarea id="message" name="zprava" rows="4" required placeholder="Jak vám můžeme pomoci?"></textarea>
+                        
+                        <input type="hidden" name="_captcha" value="false">
+                        
+                        <button type="submit" class="btn">Odeslat zprávu</button>
+                    </form>
+                </div>
+
+                <div class="contact-map">
+                    <h3>Kde nás najdete</h3>
+                    <p><strong>E-mail:</strong> autismyty@gmail.com<br>
+                    <strong>Telefon:</strong> +420 777 826 124<br>
+                    <strong>Adresa:</strong> KC Všichni spolu, Ostrava-Poruba
+                    <strong>Transparentní účet:</strong> <a href="https://ib.fio.cz/ib/transparent?a=2303377162" target="_blank">2303377162/2010</a><br></p>                 
+                    <div class="map-responsive">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3233.237181121573!2d18.1795996!3d49.838928700000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4713e1e4e7987e5f%3A0xec49a056df9bde13!2sKomunitn%C3%AD%20centrum%20V%C5%A1ichni%20spolu!5e1!3m2!1scs!2scz!4v1771062534129!5m2!1scs!2scz" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 AutisMyTy z.s. - Všechna práva vyhrazena.</p>
+    </footer>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        const navLinks = document.querySelectorAll('#nav-menu li a');
+
+        // Otevření/zavření menu po kliknutí na hamburger
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Automatické zavření menu po kliknutí na jakýkoliv odkaz (aby nezavazelo)
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
