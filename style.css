@@ -184,7 +184,7 @@ p { font-size: 1.1rem; margin-bottom: 1.5rem; }
 }
 
 .contact-form label { display: block; margin-bottom: 5px; font-weight: 500; }
-.contact-form input, .contact-form textarea {
+.contact-form input {
     width: 100%;
     padding: 12px;
     margin-bottom: 20px;
@@ -192,6 +192,18 @@ p { font-size: 1.1rem; margin-bottom: 1.5rem; }
     border-radius: 5px;
     box-sizing: border-box;
     font-family: inherit;
+} 
+
+.contact-form textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-family: inherit;
+    resize: vertical;
 }
 .contact-form button {
     width: 100%;
