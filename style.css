@@ -345,7 +345,7 @@ footer {
 
         max-height: 0;       /* Animace začíná na 0 height */
         padding: 0;          /* Animace začíná na 0 padding */
-        overflow: hidden;    /* Schhová text když není visible */
+        overflow: hidden;    /* Schová text když není visible */
         transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
     }
     
