@@ -8,7 +8,7 @@ hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('active');
 });
 
-// Automatické zavření menu po kliknutí na jakýkoliv odkaz (aby nezavazelo)
+// Automatické zavření menu po kliknutí na jakýkoliv odkaz
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
         navMenu.classList.remove('active');
@@ -16,9 +16,7 @@ navLinks.forEach(link => {
     });
 });
 
-// --- SEKCE GALERIE ---
-// Návod pro tým: Nové fotky nahrajte do složky "galerie".
-// Poté sem NAHORU do seznamu připište přesný název souboru.
+// Galerie
 const naseFotky = [
     "fotka1.jpg",
     "fotka2.jpg",
@@ -41,7 +39,7 @@ const naseFotky = [
 
 const galleryContainer = document.getElementById('gallery-container');
 
-// Modal elements
+// Modal
 const imageModal = document.getElementById('image-modal');
 const modalImage = document.getElementById('modal-image');
 
@@ -51,24 +49,19 @@ if (galleryContainer) {
         obrazek.src = `galerie/${nazevSouboru}`;
         obrazek.alt = "Fotografie z akce Autis.My.Ty";
         obrazek.loading = "lazy";
-        obrazek.style.cursor = "zoom-in"; // Changes mouse to a plus magnifying glass
+        obrazek.style.cursor = "zoom-in";
         
-        // ADDED: Click event to open the full picture
         obrazek.addEventListener('click', () => {
-            modalImage.src = obrazek.src; // Copies the image source
-            imageModal.classList.add('active'); // Shows the dark background
+            modalImage.src = obrazek.src;
+            imageModal.classList.add('active');
         });
 
         galleryContainer.appendChild(obrazek);
     });
 }
 
-// ADDED: Close the modal when clicking the "X" or the dark background
 if (imageModal) {
     imageModal.addEventListener('click', (e) => {
-        // Only close if they click outside the actual image
-        if (e.target !== modalImage) {
-            imageModal.classList.remove('active');
-        }
+        imageModal.classList.remove('active');
     });
 }
