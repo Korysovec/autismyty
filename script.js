@@ -8,7 +8,7 @@ hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('active');
 });
 
-// Automatické zavření menu po kliknutí na jakýkoliv odkaz
+// Automatické zavření menu po kliknutí na jakýkoliv odkaz (aby nezavazelo)
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
         navMenu.classList.remove('active');
@@ -16,7 +16,9 @@ navLinks.forEach(link => {
     });
 });
 
-// Galerie
+// --- SEKCE GALERIE ---
+// Návod pro tým: Nové fotky nahrajte do složky "galerie".
+// Poté sem NAHORU do seznamu připište přesný název souboru.
 const naseFotky = [
     "fotka1.jpg",
     "fotka2.jpg",
@@ -38,8 +40,9 @@ const naseFotky = [
 ];
 
 const galleryContainer = document.getElementById('gallery-container');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
 
-// Modal
 const imageModal = document.getElementById('image-modal');
 const modalImage = document.getElementById('modal-image');
 
@@ -49,19 +52,38 @@ if (galleryContainer) {
         obrazek.src = `galerie/${nazevSouboru}`;
         obrazek.alt = "Fotografie z akce Autis.My.Ty";
         obrazek.loading = "lazy";
-        obrazek.style.cursor = "zoom-in";
         
         obrazek.addEventListener('click', () => {
             modalImage.src = obrazek.src;
             imageModal.classList.add('active');
         });
-
         galleryContainer.appendChild(obrazek);
     });
 }
 
+const scrollAmount = 370;
+
+nextBtn.addEventListener('click', () => {
+    const maxScroll = galleryContainer.scrollWidth - galleryContainer.clientWidth;
+    if (galleryContainer.scrollLeft >= maxScroll - 5) {
+        galleryContainer.scrollTo({ left: 0, behavior: 'smooth' }); // Loop to start
+    } else {
+        galleryContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+});
+
+prevBtn.addEventListener('click', () => {
+    if (galleryContainer.scrollLeft <= 5) {
+        galleryContainer.scrollTo({ left: galleryContainer.scrollWidth, behavior: 'smooth' }); // Loop to end
+    } else {
+        galleryContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    }
+});
+
 if (imageModal) {
     imageModal.addEventListener('click', (e) => {
-        imageModal.classList.remove('active');
+        if (e.target !== modalImage) {
+            imageModal.classList.remove('active');
+        }
     });
 }

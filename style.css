@@ -1,4 +1,4 @@
-/* Barvy */
+/* Základní barvy a písmo */
 :root {
     --primary-blue: #0056b3;
     --dark-blue: #003f83;
@@ -7,12 +7,11 @@
     --white: #ffffff;
 }
 
-/* Box-sizing na škálování */
+/* Globální nastavení box-sizing pro správné škálování */
 *, *::before, *::after {
     box-sizing: border-box;
 }
 
-/* Font */
 body, html {
     margin: 0;
     padding: 0;
@@ -24,12 +23,7 @@ body, html {
     max-width: 100vw;
 }
 
-h1 { font-size: 3rem; color: var(--primary-blue); margin-bottom: 0.5rem; }
-h2 { font-size: 2.2rem; color: var(--primary-blue); margin-bottom: 1.5rem; }
-h3 { font-size: 1.5rem; color: var(--primary-blue); margin-top: 0; }
-p { font-size: 1.1rem; margin-bottom: 1.5rem; }
-
-/* Hlavička */
+/* Hlavička a navigace */
 header {
     background-color: var(--primary-blue);
     color: var(--white);
@@ -47,7 +41,7 @@ header {
 }
 
 
-/* PC menu */
+/* Nastavení standardního menu */
 nav ul { 
     list-style: none; 
     display: flex; 
@@ -91,7 +85,6 @@ nav ul li a:hover { opacity: 0.7; }
     transform: translateY(-8px) rotate(-45deg);
 }
 
-/* Text loga */
 .logo { 
     font-size: 1.8rem; 
     font-weight: bold; 
@@ -112,25 +105,30 @@ nav ul li a:hover { opacity: 0.7; }
 .image {
     max-height: 100%; 
     max-width: 100%;
+    background-color: var(--white);
     padding: 5px;
     border-radius: 6px;
 }
 
-/* Sekce */
+/* Společné nastavení sekcí */
 section {
     position: relative;
-    padding: 5rem 2rem 7rem;
+    padding: 7rem 2rem 4rem;
     min-height: 60vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    justify-content: center;
 }
 
 .container { max-width: 1000px; width: 100%; }
 
-/* Střídání barev pozadí */
+h1 { font-size: 3rem; color: var(--primary-blue); margin-bottom: 0.5rem; }
+h2 { font-size: 2.2rem; color: var(--primary-blue); margin-bottom: 1.5rem; }
+h3 { font-size: 1.5rem; color: var(--primary-blue); margin-top: 0; }
+p { font-size: 1.1rem; margin-bottom: 1.5rem; }
+
+/* Střídání barev pozadí pro lepší čitelnost */
 #uvod { background-color: var(--white); }
 #informace { background-color: var(--light-blue); }
 #novinky { background-color: var(--white); }
@@ -147,17 +145,18 @@ section {
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
+    transition: background-color 0.3s;
     margin-top: 20px;
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 .btn:hover { 
     background-color: #003d82; 
-    transform: translateY(-2px); 
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px); /* Moves the button up */
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3); /* Deeper shadow */
 }
 
-/* Facebook */
+/* Kontejner pro Facebook */
 .fb-wrapper {
     display: flex;
     justify-content: center;
@@ -226,7 +225,30 @@ section {
     left: 0; top: 0; height: 100%; width: 100%; position: absolute; border: 0;
 }
 
-/* Galerie */
+.wave-bottom {
+    position: absolute;
+    bottom: -1px; /* -1px zabraňuje tenké mezeře na některých monitorech */
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.wave-bottom svg {
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 60px; /* Zde můžete upravit výšku vlny */
+}
+
+/* HORIZONTÁLNÍ GALERIE (Posouvání do stran) */
+
+.gallery-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
 .gallery-scroll {
     display: flex;
     gap: 20px;
@@ -236,49 +258,82 @@ section {
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
 }
 
+.gallery-scroll::-webkit-scrollbar {
+    display: none; /* Skryje posuvník na Chromiu */
+}
+
+.gallery-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, opacity 0.3s;
+    opacity: 0.7;
+}
+
+.gallery-nav:hover {
+    opacity: 1;
+    background: var(--dark-blue);
+}
+
+.prev { left: -25px; }
+.next { right: -25px; }
+
 .gallery-scroll img {
-    flex: 0 0 auto;
-    width: 350px;
+    flex: 0 0 auto; /* Zabrání tomu, aby se fotky zdeformovaly a smrskly */
+    width: 350px;   /* Pevná šířka jedné fotky (můžete upravit) */
     height: 350px;
     object-fit: cover;
     border-radius: 8px;
-    scroll-snap-align: center;
-    transition: background-color 0.3s, box-shadow 0.2s, transform 0.3s ease;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    scroll-snap-align: center; /* Při scrollování se fotka zastaví uprostřed */
+    transition: transform 0.3s ease;
 }
 
-/* Při najetí myší se obrázek nadzvedne */
+/* Místo zvětšování se fotka při najetí myší mírně nadzvedne */
 .gallery-scroll img:hover {
     transform: translateY(-5px);
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* MODAL */
+/* MODAL (Zvětšení fotky) */
 .gallery-modal {
-    display: none;
+    display: none; /* By default, it is hidden */
     position: fixed;
-    z-index: 2000;
+    z-index: 2000; /* Must be higher than your header (which is 1000) */
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.85);
+    background-color: rgba(0, 0, 0, 0.85); /* Dark semi-transparent background */
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    cursor: zoom-out;
+    cursor: zoom-out; /* Changes mouse cursor to a minus magnifying glass */
 }
 
+/* JavaScript will add this class to show it */
 .gallery-modal.active {
     display: flex; 
 }
 
 .gallery-modal img {
     max-width: 90%;
-    max-height: 85vh;
-    object-fit: contain; 
+    max-height: 85vh; /* 85% of the screen height so it never gets cut off */
+    object-fit: contain; /* Shows the whole image without cropping */
     border-radius: 5px;
     box-shadow: 0 5px 25px rgba(0,0,0,0.5);
     cursor: default;
@@ -296,7 +351,20 @@ section {
 }
 
 .close-modal:hover {
-    color: var(--dark-blue);
+    color: var(--primary-blue);
+}
+
+/* Hezčí vzhled posuvníku na počítači */
+.gallery-scroll::-webkit-scrollbar {
+    height: 8px;
+}
+.gallery-scroll::-webkit-scrollbar-track {
+    background: var(--light-blue);
+    border-radius: 4px;
+}
+.gallery-scroll::-webkit-scrollbar-thumb {
+    background: var(--primary-blue);
+    border-radius: 4px;
 }
 
 /* Patička */
@@ -308,25 +376,16 @@ footer {
     font-size: 0.9rem;
 }
 
-.wave-bottom {
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    line-height: 0;
-}
-
-.wave-bottom svg {
-    display: block;
-    width: calc(100% + 1.3px);
-    height: 50px;
-}
-
-/* MOBILNÍ VERZE (Když šířka obrazovky klesne pod 768px) */
+/* =========================================
+    MOBILNÍ VERZE (Když je obrazovka menší než 768px)
+    ========================================= */
 @media (max-width: 768px) {
     header { padding: 1rem; }
     
+    .prev { left: 5px; }
+    .next { right: 5px; }
+    .gallery-nav { width: 35px; height: 35px; font-size: 1.2rem; }
+
     /* Zobrazí hamburger ikonu */
     .hamburger { display: flex; }
     
@@ -335,7 +394,7 @@ footer {
         display: flex;
         flex-direction: column;
         position: absolute;
-        top: 100%;
+        top: 100%; /* Zarovnání pod hlavičku */
         left: 50%;
         width: 50%;
         background-color: var(--primary-blue);
@@ -345,11 +404,11 @@ footer {
 
         max-height: 0;       /* Animace začíná na 0 height */
         padding: 0;          /* Animace začíná na 0 padding */
-        overflow: hidden;    /* Schová text když není visible */
+        overflow: hidden;    /* Schhová text když není visible */
         transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
     }
     
-    /* Třída pro JavaScript na zobrazení menu */
+    /* Třída, kterou přidává JavaScript pro zobrazení menu */
     nav ul.active { 
         max-height: 400px;
         padding: 1rem 0; 
@@ -357,7 +416,7 @@ footer {
     
     nav ul li { margin: 15px 0; }
     
-    /* Úpravy textu a sekcí */
+    /* Zmenšení paddingů a textů pro menší displeje */
     section { padding: 6rem 1.5rem 3rem; }
     h1 { font-size: 2.2rem; }
     h2 { font-size: 1.8rem; }
