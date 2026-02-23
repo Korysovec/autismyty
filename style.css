@@ -241,16 +241,57 @@ p { font-size: 1.1rem; margin-bottom: 1.5rem; }
 }
 
 /* HORIZONTÁLNÍ GALERIE (Posouvání do stran) */
+
+.gallery-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
 .gallery-scroll {
     display: flex;
     gap: 20px;
-    overflow-x: auto; /* Zapne horizontální scrollování */
-    padding: 10px 0 20px 0; /* Spodní mezera pro posuvník */
+    overflow-x: auto;
+    padding: 10px 0 20px 0;
     width: 100%;
-    scroll-snap-type: x mandatory; /* Magnetické přichytávání fotek */
+    scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch; /* Plynulé scrollování na iPhonech */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
 }
+
+.gallery-scroll::-webkit-scrollbar {
+    display: none; /* Skryje posuvník na Chromiu */
+}
+
+.gallery-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, opacity 0.3s;
+    opacity: 0.7;
+}
+
+.gallery-nav:hover {
+    opacity: 1;
+    background: var(--dark-blue);
+}
+
+.prev { left: -25px; }
+.next { right: -25px; }
 
 .gallery-scroll img {
     flex: 0 0 auto; /* Zabrání tomu, aby se fotky zdeformovaly a smrskly */
@@ -341,6 +382,10 @@ footer {
 @media (max-width: 768px) {
     header { padding: 1rem; }
     
+    .prev { left: 5px; }
+    .next { right: 5px; }
+    .gallery-nav { width: 35px; height: 35px; font-size: 1.2rem; }
+
     /* Zobrazí hamburger ikonu */
     .hamburger { display: flex; }
     
