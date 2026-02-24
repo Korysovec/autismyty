@@ -108,11 +108,12 @@ nav ul li a:hover { opacity: 0.7; }
 }
 
 .image {
-    max-height: 100%; 
-    max-width: 100%;
-    background-color: var(--white);
-    padding: 5px;
-    border-radius: 6px;
+    flex: 0 0 auto;
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
 /* Společné nastavení sekcí */
@@ -195,6 +196,24 @@ p.white {color: var(--white); }
     max-width: 100%;
 }
 
+.info-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 30px;
+    width: 100%;
+    text-align: left;
+}
+
+.info-box {
+    flex: 1;
+    min-width: 300px;
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
 /* Formulář a Mapa */
 .contact-container {
     display: flex;
@@ -208,7 +227,7 @@ p.white {color: var(--white); }
 .contact-form, .contact-map {
     flex: 1;
     min-width: 300px;
-    background-color: var(--white); /* Bílé boxy na modrém pozadí */
+    background-color: var(--light-blue); /* Bílé boxy na modrém pozadí */
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
