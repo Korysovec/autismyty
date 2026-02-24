@@ -37,7 +37,6 @@ header {
     left: 0;
     box-sizing: border-box;
     z-index: 1000;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -102,6 +101,12 @@ nav ul li a:hover { opacity: 0.7; }
     border-radius: 6px;
 }
 
+.image-logo {
+    max-height: auto; 
+    max-width: 200px;
+    filter: drop-shadow(5px 5px 5px rgb(255, 255, 255));
+}
+
 .image {
     max-height: 100%; 
     max-width: 100%;
@@ -119,17 +124,23 @@ section {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    justify-content: center;
 }
 
 .container { max-width: 1000px; width: 100%; }
 
-h1 { font-size: 3rem; color: var(--primary-blue); margin-bottom: 0.5rem; }
+h1 { font-size: 3rem; color: var(--white); margin-bottom: 0.5rem; }
 h2 { font-size: 2.2rem; color: var(--primary-blue); margin-bottom: 1.5rem; }
 h3 { font-size: 1.5rem; color: var(--primary-blue); margin-top: 0; }
 p { font-size: 1.1rem; margin-bottom: 1.5rem; }
+p.white {color: var(--white); }
 
 /* Střídání barev pozadí pro lepší čitelnost */
-#uvod { background-color: var(--white); }
+#uvod { 
+    background: linear-gradient(rgba(0, 86, 179, 1), rgba(0, 86, 179, 0.7)), 
+                url('galerie/header-bg.jpg'); 
+    height: 100vh;
+}
 #informace { background-color: var(--light-blue); }
 #novinky { background-color: var(--white); }
 #galerie { background-color: var(--light-blue); }
@@ -152,6 +163,25 @@ p { font-size: 1.1rem; margin-bottom: 1.5rem; }
 }
 .btn:hover { 
     background-color: #003d82; 
+    transform: translateY(-2px); /* Moves the button up */
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3); /* Deeper shadow */
+}
+
+.btn-white {
+    display: inline-block;
+    background-color: var(--white);
+    color: var(--primary-blue);
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+.btn-white:hover { 
+    background-color: #e4e4e4; 
     transform: translateY(-2px); /* Moves the button up */
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3); /* Deeper shadow */
 }
