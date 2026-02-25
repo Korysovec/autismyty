@@ -1,6 +1,22 @@
 const hamburger = document.getElementById('hamburger');
 const navMenu = document.getElementById('nav-menu');
 const navLinks = document.querySelectorAll('#nav-menu li a');
+const readMoreButtons = document.querySelectorAll('.read-more-btn');
+
+readMoreButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        const infoBox = this.parentElement;
+        infoBox.classList.toggle('expanded');
+        
+        if (infoBox.classList.contains('expanded')) {
+            this.textContent = 'Zobrazit méně';
+        } else {
+            this.textContent = 'Číst dále';
+            // Smooth scroll back up to the box if closing
+            infoBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    });
+});
 
 // Otevření/zavření menu po kliknutí na hamburger
 hamburger.addEventListener('click', () => {
