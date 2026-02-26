@@ -234,7 +234,8 @@ p.white {color: var(--white); }
 }
 
 .info-box.expanded .expandable-content {
-    max-height: 1000px;
+    max-height: 70vh;
+    overflow-y: auto;
 }
 
 .info-box.expanded .expandable-content::after {
@@ -250,6 +251,12 @@ p.white {color: var(--white); }
     padding: 10px 0;
     font-size: 1rem;
     text-decoration: underline;
+    transition: transform 0.2s;
+}
+
+.read-more-btn:hover {  
+    transform: translateY(-2px); /* Moves the button up */
+    color: #003d82;
 }
 
 /* Formulář a Mapa */
